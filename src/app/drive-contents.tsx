@@ -27,7 +27,8 @@ export default function DriveContents(props: {
       const folder = props.folders.find((folder) => folder.id === currentId);
       if (folder) {
         breadcrumbs.unshift(folder);
-        currentId = folder.parent ?? 1;
+        // weird type issue here
+        currentId = typeof folder.parent === 'number' ? folder.parent : 1;
       } else {
         break;
       }
