@@ -78,7 +78,7 @@ const Folder = ({ item, level = 0 }: { item: Item; level?: number }) => {
               {child.type === "folder" ? (
                 <Folder item={child} level={level + 1} />
               ) : (
-                <File name={child.name} url={child.url || "#"} />
+                <File name={child.name} url={child.url ?? "#"} />
               )}
             </div>
           ))}
