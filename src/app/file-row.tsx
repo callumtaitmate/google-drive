@@ -1,8 +1,10 @@
-import type { Folder, File } from "./initialData"
 import { Folder as FolderIcon, FileIcon } from "lucide-react";
 import Link from "next/link";
+import type { folders, files } from "~/server/db/schema";
 
-export function FileRow(props: {file: File})
+export function FileRow(props: {
+  file: typeof files.$inferSelect
+})
 {
     const { file } = props;
     return (
@@ -31,7 +33,9 @@ export function FileRow(props: {file: File})
     )
 }
 
-export function FolderRow(props: {folder: Folder, handleFolderClick: () => void})
+export function FolderRow(props:
+  {folder: typeof folders.$inferSelect;
+     handleFolderClick: () => void})
 {
 const { folder, handleFolderClick } = props;
 
