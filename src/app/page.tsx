@@ -1,136 +1,122 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { FolderIcon, FileIcon, Upload, ChevronRight, ChevronDown, Search, Moon, Sun } from "lucide-react"
-import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
-import { Switch } from "~/components/ui/switch"
-import { initialData } from "./initialData";
-
-// Mock data
-
-type Item = {
-  name: string
-  type: "file" | "folder"
-  children?: Item[]
-  url?: string
-}
-
-const File = ({ name, url }: { name: string; url: string }) => (
-  <a
-    href={url}
-    className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
-  >
-    <FileIcon className="w-6 h-6 mr-3 text-blue-500 dark:text-blue-400" />
-    <span className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
-      {name}
-    </span>
-  </a>
-)
-
-const Folder = ({ item, level = 0 }: { item: Item; level?: number }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  if (!item) return null
-
-  return (
-    <div>
-      <div
-        className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg cursor-pointer transition-colors duration-200"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? (
-          <ChevronDown className="w-6 h-6 mr-3 text-gray-500 dark:text-gray-400" />
-        ) : (
-          <ChevronRight className="w-6 h-6 mr-3 text-gray-500 dark:text-gray-400" />
-        )}
-        <FolderIcon className="w-6 h-6 mr-3 text-yellow-500 dark:text-yellow-400" />
-        <span className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
-          {item.name}
-        </span>
-      </div>
-      {isOpen && item.children && (
-        <div style={{ paddingLeft: `${(level + 1) * 24}px` }} className="mt-1">
-          {item.children.map((child, index) => (
-            <div key={index} className="my-1">
-              {child.type === "folder" ? (
-                <Folder item={child} level={level + 1} />
-              ) : (
-                <File name={child.name} url={child.url ?? "#"} />
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-const UploadButton = () => {
-  const handleUpload = () => {
-    alert("Upload functionality would be implemented here")
-  }
-
-  return (
-    <Button
-      onClick={handleUpload}
-      className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors duration-200"
-    >
-      <Upload className="w-5 h-5 mr-2" />
-      Upload
-    </Button>
-  )
-}
-
-const SearchBar = () => (
-  <div className="relative flex-grow mr-4">
-    <Input
-      type="text"
-      placeholder="Search files..."
-      className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring focus:ring-blue-200 dark:focus:ring-blue-300 transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-    />
-    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
-  </div>
-)
-
-const DarkModeToggle = ({
-  isDarkMode,
-  setIsDarkMode,
-}: { isDarkMode: boolean; setIsDarkMode: (isDark: boolean) => void }) => (
-  <div className="flex items-center space-x-2">
-    <Sun className={`w-5 h-5 ${isDarkMode ? "text-gray-400 dark:text-gray-500" : "text-yellow-500"}`} />
-    <Switch checked={isDarkMode} onCheckedChange={setIsDarkMode} />
-    <Moon className={`w-5 h-5 ${isDarkMode ? "text-blue-500" : "text-gray-400 dark:text-gray-500"}`} />
-  </div>
-)
+import { useState } from "react";
+import { mockFiles } from "~/app/initialData";
+import { Folder, FileIcon, Upload, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
 export default function GoogleDriveClone() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [currentFolder, setCurrentFolder] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
+  const getCurrentFiles = () => {
+    return mockFiles.filter((file) => file.parent === currentFolder);
+  };
+
+  const handleFolderClick = (folderId: string) => {
+    setCurrentFolder(folderId);
+  };
+
+  const getBreadcrumbs = () => {
+    const breadcrumbs = [];
+    let currentId = currentFolder;
+
+    while (currentId !== null) {
+      const folder = mockFiles.find((file) => file.id === currentId);
+      if (folder) {
+        breadcrumbs.unshift(folder);
+        currentId = folder.parent;
+      } else {
+        break;
+      }
     }
-  }, [isDarkMode])
+
+    return breadcrumbs;
+  };
+
+  const handleUpload = () => {
+    alert("Upload functionality would be implemented here");
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Google Drive Clone</h1>
-        <div className="flex justify-between items-center mb-6">
-          <SearchBar />
-          <div className="flex space-x-4">
-            <DarkModeToggle isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-            <UploadButton />
+    <div className="min-h-screen bg-gray-900 p-8 text-gray-100">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center">
+            <Button
+              onClick={() => setCurrentFolder(null)}
+              variant="ghost"
+              className="mr-2 text-gray-300 hover:text-white"
+            >
+              My Drive
+            </Button>
+            {getBreadcrumbs().map((folder, index) => (
+              <div key={folder.id} className="flex items-center">
+                <ChevronRight className="mx-2 text-gray-500" size={16} />
+                <Button
+                  onClick={() => handleFolderClick(folder.id)}
+                  variant="ghost"
+                  className="text-gray-300 hover:text-white"
+                >
+                  {folder.name}
+                </Button>
+              </div>
+            ))}
           </div>
+          <Button
+            onClick={handleUpload}
+            className="bg-blue-600 text-white hover:bg-blue-700"
+          >
+            <Upload className="mr-2" size={20} />
+            Upload
+          </Button>
         </div>
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm p-6">
-          <Folder item={initialData} />
+        <div className="rounded-lg bg-gray-800 shadow-xl">
+          <div className="border-b border-gray-700 px-6 py-4">
+            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400">
+              <div className="col-span-6">Name</div>
+              <div className="col-span-3">Type</div>
+              <div className="col-span-3">Size</div>
+            </div>
+          </div>
+          <ul>
+            {getCurrentFiles().map((file) => (
+              <li
+                key={file.id}
+                className="hover:bg-gray-750 border-b border-gray-700 px-6 py-4"
+              >
+                <div className="grid grid-cols-12 items-center gap-4">
+                  <div className="col-span-6 flex items-center">
+                    {file.type === "folder" ? (
+                      <button
+                        onClick={() => handleFolderClick(file.id)}
+                        className="flex items-center text-gray-100 hover:text-blue-400"
+                      >
+                        <Folder className="mr-3" size={20} />
+                        {file.name}
+                      </button>
+                    ) : (
+                      <Link
+                        href={file.url ?? "#"}
+                        className="flex items-center text-gray-100 hover:text-blue-400"
+                      >
+                        <FileIcon className="mr-3" size={20} />
+                        {file.name}
+                      </Link>
+                    )}
+                  </div>
+                  <div className="col-span-3 text-gray-400">
+                    {file.type === "folder" ? "Folder" : "File"}
+                  </div>
+                  <div className="col-span-3 text-gray-400">
+                    {file.type === "folder" ? "--" : "2 MB"}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
