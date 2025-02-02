@@ -1,23 +1,23 @@
-on: [push]
+name: CI
 
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    -name: Checkout
-    - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Copy .env.example files
+        shell: bash
+        run: find . -type f -name ".env.example" -exec sh -c 'cp "$1" "${1%.*}"' _ {} \;
 
-    - name: Copy .env.example files
-      run: cp .env.example .env
+      - name: Typecheck
+        run: npm typecheck
 
-    - name: Typecheck
-      run: npm typecheck
-
-    - name: Lint
-      run: npm lint
+      - name: Lint
+        run: npm lint
