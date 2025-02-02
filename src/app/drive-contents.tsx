@@ -5,11 +5,11 @@ import { Upload, ChevronRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { FileRow, FolderRow } from "./file-row";
-import type { files, folders } from "~/server/db/schema";
+import type { files_table, folders_table } from "~/server/db/schema";
 
 export default function DriveContents(props: {
-  files: typeof files.$inferSelect[],
-  folders: typeof folders.$inferSelect[]
+  files: typeof files_table.$inferSelect[],
+  folders: typeof folders_table.$inferSelect[]
 }
 ) {
   const [currentFolder, setCurrentFolder] = useState<number>(1);
