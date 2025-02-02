@@ -5,6 +5,7 @@ import { mockFiles } from "~/app/initialData";
 import { Folder, FileIcon, Upload, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import { ThemeToggle } from "~/components/ui/theme-toggle";
 
 export default function GoogleDriveClone() {
   const [currentFolder, setCurrentFolder] = useState<string | null>(null);
@@ -39,29 +40,12 @@ export default function GoogleDriveClone() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8 text-gray-100">
+    <div className="min-h-screen bg-background p-8 text-foreground">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center">
-            <Button
-              onClick={() => setCurrentFolder(null)}
-              variant="ghost"
-              className="mr-2 text-gray-300 hover:text-white"
-            >
-              My Drive
-            </Button>
-            {getBreadcrumbs().map((folder, index) => (
-              <div key={folder.id} className="flex items-center">
-                <ChevronRight className="mx-2 text-gray-500" size={16} />
-                <Button
-                  onClick={() => handleFolderClick(folder.id)}
-                  variant="ghost"
-                  className="text-gray-300 hover:text-white"
-                >
-                  {folder.name}
-                </Button>
-              </div>
-            ))}
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold">Google Drive Clone</h1>
+            <ThemeToggle />
           </div>
           <Button
             onClick={handleUpload}
@@ -71,45 +55,64 @@ export default function GoogleDriveClone() {
             Upload
           </Button>
         </div>
-        <div className="rounded-lg bg-gray-800 shadow-xl">
-          <div className="border-b border-gray-700 px-6 py-4">
-            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400">
+
+        <div className="mb-6 flex items-center">
+          <Button
+            onClick={() => setCurrentFolder(null)}
+            variant="ghost"
+            className="mr-2"
+          >
+            My Drive
+          </Button>
+          {getBreadcrumbs().map((folder, index) => (
+            <div key={folder.id} className="flex items-center">
+              <ChevronRight className="mx-2 text-muted-foreground" size={16} />
+              <Button
+                onClick={() => handleFolderClick(folder.id)}
+                variant="ghost"
+              >
+                {folder.name}
+              </Button>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-lg border bg-card shadow-sm">
+          <div className="border-b px-6 py-4">
+            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-muted-foreground">
               <div className="col-span-6">Name</div>
               <div className="col-span-3">Type</div>
               <div className="col-span-3">Size</div>
             </div>
           </div>
-          <ul>
+          <ul className="divide-y">
             {getCurrentFiles().map((file) => (
-              <li
-                key={file.id}
-                className="hover:bg-gray-750 border-b border-gray-700 px-6 py-4"
-              >
+              <li key={file.id} className="px-6 py-4 transition-colors hover:bg-muted/50">
                 <div className="grid grid-cols-12 items-center gap-4">
                   <div className="col-span-6 flex items-center">
                     {file.type === "folder" ? (
                       <button
                         onClick={() => handleFolderClick(file.id)}
-                        className="flex items-center text-gray-100 hover:text-blue-400"
+                        className="flex items-center hover:text-blue-600 dark:hover:text-blue-400"
                       >
-                        <Folder className="mr-3" size={20} />
+                        <Folder className="mr-3 text-blue-600 dark:text-blue-400" size={20} />
                         {file.name}
                       </button>
                     ) : (
                       <Link
                         href={file.url ?? "#"}
-                        className="flex items-center text-gray-100 hover:text-blue-400"
+                        className="flex items-center hover:text-blue-600 dark:hover:text-blue-400"
                       >
-                        <FileIcon className="mr-3" size={20} />
+                        <FileIcon className="mr-3 text-gray-500" size={20} />
                         {file.name}
                       </Link>
                     )}
                   </div>
-                  <div className="col-span-3 text-gray-400">
+                  <div className="col-span-3 text-muted-foreground">
                     {file.type === "folder" ? "Folder" : "File"}
                   </div>
-                  <div className="col-span-3 text-gray-400">
-                    {file.type === "folder" ? "--" : "2 MB"}
+                  <div className="col-span-3 text-muted-foreground">
+                    {file.type === "folder" ? "--" : file.size}
                   </div>
                 </div>
               </li>
