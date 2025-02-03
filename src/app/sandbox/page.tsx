@@ -10,7 +10,6 @@ export default function SandboxPage() {
 
             <div>
                 <h2>Seed Function</h2>
-                
             </div>
         </div>
     )
