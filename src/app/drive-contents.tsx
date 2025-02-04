@@ -1,11 +1,17 @@
 "use client";
 import { useState } from "react";
-import { Upload, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 
 export default function DriveContents(props: {
   files: typeof files_table.$inferSelect[],
@@ -16,7 +22,7 @@ export default function DriveContents(props: {
   const [currentFolder, setCurrentFolder] = useState<number>(1);
   const handleUpload = () => {
     alert("Upload functionality would be implemented here");
-  };
+  }
 
   return (
     <div className="min-h-screen bg-background p-8 text-foreground">
@@ -26,13 +32,20 @@ export default function DriveContents(props: {
             <h1 className="text-2xl font-bold">Google Drive Clone</h1>
             <ThemeToggle />
           </div>
-          <Button
-            onClick={handleUpload}
-            className="bg-blue-600 text-white hover:bg-blue-700"
-          >
-            <Upload className="mr-2" size={20} />
-            Upload
-          </Button>
+          <div className="flex items-center">
+            <Button
+              onClick={handleUpload}
+              className="bg-blue-600 text-white hover:bg-blue-700"
+            >Upload</Button>
+            <div className="px-3 flex items-center">
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+          </div>
         </div>
 
         <div className="mb-6 flex items-center">
