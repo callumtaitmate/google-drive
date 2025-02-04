@@ -29,7 +29,7 @@ export default function DriveContents(props: {
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold">Google Drive Clone</h1>
+            <h1 className="text-2xl font-bold">store-my-files</h1>
             <ThemeToggle />
           </div>
           <div className="flex items-center">
@@ -70,8 +70,8 @@ export default function DriveContents(props: {
           <div className="border-b px-6 py-4">
             <div className="grid grid-cols-12 gap-4 text-sm font-medium text-muted-foreground">
               <div className="col-span-6">Name</div>
-              <div className="col-span-3">Type</div>
               <div className="col-span-3">Size</div>
+              <div className="col-span-1">Action</div>
             </div>
           </div>
           <ul className="divide-y">
@@ -83,10 +83,11 @@ export default function DriveContents(props: {
             ))}
           </ul>
         </div>
-        <UploadButton input={{
-          folderId: props.currentFolderId
-          
-        }} endpoint="driveUploader" onClientUploadComplete={() => navigate.refresh()} />
+        <div className="mt-4">
+          <UploadButton input={{
+            folderId: props.currentFolderId
+
+          }} endpoint="driveUploader" onClientUploadComplete={() => navigate.refresh()} /></div>
       </div>
     </div>
   );
