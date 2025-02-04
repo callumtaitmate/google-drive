@@ -20,7 +20,7 @@ export default function PostHogPageView() : null {
     else {
         posthog.reset();
     }
-}, [posthog, userInfo.user?.emailAddresses[0]?.emailAddress])
+}, [posthog, userInfo.user?.emailAddresses])
 
 
 
