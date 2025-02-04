@@ -1,6 +1,5 @@
 "use client";
-
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Upload, ChevronRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
@@ -10,16 +9,11 @@ import Link from "next/link";
 
 export default function DriveContents(props: {
   files: typeof files_table.$inferSelect[],
-  folders: typeof folders_table.$inferSelect[]
+  folders: typeof folders_table.$inferSelect[],
+  parents: typeof folders_table.$inferSelect[],
 }
 ) {
   const [currentFolder, setCurrentFolder] = useState<number>(1);
-  const breadcrumbs: unknown[] = []
-  const handleFolderClick = (folderId: number) => {
-    setCurrentFolder(folderId);
-  };
-
-
   const handleUpload = () => {
     alert("Upload functionality would be implemented here");
   };
@@ -48,12 +42,11 @@ export default function DriveContents(props: {
           >
             My Drive
           </Link>
-          {breadcrumbs.map((folder) => (
+          {props.parents.map((folder) => (
             <div key={folder.id} className="flex items-center">
               <ChevronRight className="mx-2 text-muted-foreground" size={16} />
               <Link
                 href={`/f/${folder.id}`}
-                variant="ghost"
               >
                 {folder.name}
               </Link>
@@ -71,10 +64,10 @@ export default function DriveContents(props: {
           </div>
           <ul className="divide-y">
             {props.folders.map((folder) => (
-              <FolderRow key={folder.id} folder={folder} /> 
+              <FolderRow key={folder.id} folder={folder} />
             ))}
             {props.files.map((file) => (
-              <FileRow key={file.id} file={file}/>
+              <FileRow key={file.id} file={file} />
             ))}
           </ul>
         </div>
