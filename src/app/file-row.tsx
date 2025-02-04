@@ -31,10 +31,9 @@ export function FileRow(props: {
 }
 
 export function FolderRow(props:
-  {folder: typeof folders_table.$inferSelect;
-     handleFolderClick: () => void})
+  {folder: typeof folders_table.$inferSelect;})
 {
-const { folder, handleFolderClick } = props;
+const { folder } = props;
 
     return (
     
@@ -43,13 +42,13 @@ const { folder, handleFolderClick } = props;
     <div className="grid grid-cols-12 items-center gap-4">
       <div className="col-span-6 flex items-center">
         
-          <button
-            onClick={() => handleFolderClick()}
+          <Link
+            href={`/f/${folder.id}`}
             className="flex items-center hover:text-blue-600 dark:hover:text-blue-400"
           >
             <FolderIcon className="mr-3 text-blue-600 dark:text-blue-400" size={20} />
             {folder.name}
-          </button>
+          </Link>
         
       </div>
       <div className="col-span-3 text-muted-foreground">

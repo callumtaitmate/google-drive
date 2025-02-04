@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
+import Link from "next/link";
 
 export default function DriveContents(props: {
   files: typeof files_table.$inferSelect[],
@@ -13,29 +14,11 @@ export default function DriveContents(props: {
 }
 ) {
   const [currentFolder, setCurrentFolder] = useState<number>(1);
-
-
+  const breadcrumbs: unknown[] = []
   const handleFolderClick = (folderId: number) => {
     setCurrentFolder(folderId);
   };
 
-  const breadcrumbs = useMemo(() => {
-    const breadcrumbs = [];
-    let currentId = currentFolder;
-
-    while (currentId !== 1) {
-      const folder = props.folders.find((folder) => folder.id === currentId);
-      if (folder) {
-        breadcrumbs.unshift(folder);
-        // weird type issue here
-        currentId = typeof folder.parent === 'number' ? folder.parent : 1;
-      } else {
-        break;
-      }
-    }
-
-    return breadcrumbs;
-  }, [currentFolder, props.folders]);
 
   const handleUpload = () => {
     alert("Upload functionality would be implemented here");
@@ -59,22 +42,21 @@ export default function DriveContents(props: {
         </div>
 
         <div className="mb-6 flex items-center">
-          <Button
-            onClick={() => setCurrentFolder(1)}
-            variant="ghost"
+          <Link
+            href={`/f/1`}
             className="mr-2"
           >
             My Drive
-          </Button>
+          </Link>
           {breadcrumbs.map((folder) => (
             <div key={folder.id} className="flex items-center">
               <ChevronRight className="mx-2 text-muted-foreground" size={16} />
-              <Button
-                onClick={() => handleFolderClick(folder.id)}
+              <Link
+                href={`/f/${folder.id}`}
                 variant="ghost"
               >
                 {folder.name}
-              </Button>
+              </Link>
             </div>
           ))}
         </div>
@@ -89,7 +71,7 @@ export default function DriveContents(props: {
           </div>
           <ul className="divide-y">
             {props.folders.map((folder) => (
-              <FolderRow key={folder.id} folder={folder} handleFolderClick={() => handleFolderClick(folder.id)} /> 
+              <FolderRow key={folder.id} folder={folder} /> 
             ))}
             {props.files.map((file) => (
               <FileRow key={file.id} file={file}/>
