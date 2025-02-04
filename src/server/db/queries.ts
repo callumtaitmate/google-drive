@@ -27,7 +27,7 @@ export const QUERIES = {
 
 
   getFolderById: async function (folderId: number) {
-    const folder = (await db.select(0).from(folders_table).where(eq(folders_table.id, folderId)));
+    const folder = (await db.select().from(folders_table).where(eq(folders_table.id, folderId)));
     return folder[0];
 
 

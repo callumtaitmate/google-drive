@@ -7,8 +7,8 @@ import {
 } from '@clerk/nextjs'
 
 export const metadata: Metadata = {
-  title: "Google Drive Clone",
-  description: "A professional Google Drive clone built with Next.js",
+  title: "store-my-files",
+  description: "Bare bones online file store, store-my-files.com.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
