@@ -3,8 +3,11 @@
 
 ## TODO
 
-3rd February
+4th Feb
 
-next -> change folders to links, remove all client state
--> clean up database and fetching patterns
--> real homepage
+- [ ] Home Page
+- [ ] Upload files to the correct folder
+- [ ] Delete files button
+- [ ] Allow files that aren't images to be uploaded
+
+
