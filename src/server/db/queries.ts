@@ -37,14 +37,14 @@ export const QUERIES = {
     return db
       .select()
       .from(files_table)
-      .where(eq(files_table.parent, folderId));
+      .where(eq(files_table.parent, folderId)).orderBy(folders_table.id);
   },
 
   getFiles: function (folderId: number) {
     return db
       .select()
       .from(folders_table)
-      .where(eq(folders_table.parent, folderId));
+      .where(eq(folders_table.parent, folderId)).orderBy(folders_table.id);
   },
 };
 
