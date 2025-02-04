@@ -1,9 +1,8 @@
-"use client"
+'use client';
+import { SignInButton } from "@clerk/nextjs";
+import { motion } from "framer-motion"
 
-import { motion } from "framer-motion";
-import StartNow from "./startNow";
-
-export default function Page() {
+export default function SignInPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800">
       <motion.div
@@ -24,14 +23,16 @@ export default function Page() {
           }}
           transition={{
             repeat: Number.POSITIVE_INFINITY,
-            duration: 2,
+            duration: 1000,
             ease: "easeInOut",
           }}
         >
-          store-my-files
+          Sign In
         </motion.h1>
         <p className="mt-2 text-sm md:text-lg text-gray-300">Bare bones file storage</p>
-        <StartNow />
+       
+        <SignInButton forceRedirectUrl={"/drive"} />
+
       </motion.div>
     </div>
   )
