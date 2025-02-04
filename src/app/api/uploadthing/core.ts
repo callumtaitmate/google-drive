@@ -39,9 +39,12 @@ export const ourFileRouter = {
       
       // eslint-disable-next-line @typescript-eslint/only-throw-error
       if (!folder) throw new UploadThingError("Folder not")
+
+
+
+      if (folder.ownerId !== user.userId)
         
       // eslint-disable-next-line @typescript-eslint/only-throw-error
-      if (folder.ownerId !== user.userId)
         throw new UploadThingError("Unauthorised")
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
