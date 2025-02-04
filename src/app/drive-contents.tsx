@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { FileRow, FolderRow } from "./file-row";
-import type { files_table, folders_table } from "~/server/db/schema";
+import { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
 import {
   SignInButton,
@@ -18,6 +18,7 @@ export default function DriveContents(props: {
   files: typeof files_table.$inferSelect[],
   folders: typeof folders_table.$inferSelect[],
   parents: typeof folders_table.$inferSelect[],
+  currentFolderId: number;
 }
 ) {
 
@@ -48,7 +49,7 @@ export default function DriveContents(props: {
 
         <div className="mb-6 flex items-center">
           <Link
-            href={`/f/1`}
+            href={`/f/1125899906842625`}
             className="mr-2"
           >
             My Drive
@@ -82,7 +83,10 @@ export default function DriveContents(props: {
             ))}
           </ul>
         </div>
-        <UploadButton endpoint="imageUploader" onClientUploadComplete={() => navigate.refresh()} />
+        <UploadButton input={{
+          folderId: props.currentFolderId
+          
+        }} endpoint="imageUploader" onClientUploadComplete={() => navigate.refresh()} />
       </div>
     </div>
   );

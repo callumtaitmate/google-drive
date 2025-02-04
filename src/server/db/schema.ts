@@ -14,7 +14,7 @@ import {
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = singlestoreTableCreator(
-  (name) => `google-drive_${name}`,
+  (name) => `google_drive_${name}`,
 );
 
 export const files_table = createTable(
@@ -24,14 +24,18 @@ export const files_table = createTable(
       .primaryKey()
       .autoincrement(),
 
+    ownerId: text("owner_id").notNull(),
+
     name: text("name").notNull(),
     size: int("size").notNull(),
     url: text("url").notNull(),
     parent: bigint("parent", { mode: "number", unsigned: true }).notNull(),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
   },
   (t) => {
     return [
       index("parent_index").on(t.parent),
+      index("owner_id_index").on(t.ownerId),
     ];
   },
 );
@@ -45,12 +49,16 @@ export const folders_table = createTable(
       .primaryKey()
       .autoincrement(),
 
+    ownerId: text("owner_id").notNull(),
+
     name: text("name").notNull(),
     parent: bigint("parent", { mode: "number", unsigned: true }),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
   },
   (t) => {
     return [
       index("parent_index").on(t.parent),
+      index("owner_id_index").on(t.ownerId),
     ];
   },
 );
