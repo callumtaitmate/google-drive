@@ -6,8 +6,8 @@
 4th Feb
 
 
-- [ ] Home Page
+- [ ] Home Page + onboarding
 - [ ] Delete files button
-- [ ] Allow files that aren't images to be uploaded
+- [ ] analytics
 
 

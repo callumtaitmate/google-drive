@@ -5,6 +5,7 @@ import { ThemeProvider } from "~/components/ui/theme-provider";
 import {
   ClerkProvider
 } from '@clerk/nextjs'
+import { PostHogProvider } from "./_providers/posthog-provider";
 
 export const metadata: Metadata = {
   title: "store-my-files",
@@ -26,7 +27,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <PostHogProvider>
+              {children}
+
+            </PostHogProvider>
           </ThemeProvider>
         </body>
       </html>
