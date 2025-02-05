@@ -48,20 +48,14 @@ export default function DriveContents(props: {
         </div>
 
         <div className="mb-6 flex items-center">
-          <Link
-            href={`/f/1125899906842625`}
-            className="mr-2"
-          >
-            My Drive
-          </Link>
           {props.parents.map((folder) => (
             <div key={folder.id} className="flex items-center">
-              <ChevronRight className="mx-2 text-muted-foreground" size={16} />
               <Link
                 href={`/f/${folder.id}`}
               >
                 {folder.name}
               </Link>
+              <ChevronRight className="mx-2 text-muted-foreground" size={16} />
             </div>
           ))}
         </div>

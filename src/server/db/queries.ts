@@ -24,20 +24,19 @@ export const QUERIES = {
     return parents;
   },
 
-
-
   getFolderById: async function (folderId: number) {
-    const folder = (await db.select().from(folders_table).where(eq(folders_table.id, folderId)));
+    const folder = await db
+      .select()
+      .from(folders_table)
+      .where(eq(folders_table.id, folderId));
     return folder[0];
-
-
   },
 
   getFolders: function (folderId: number) {
     return db
       .select()
       .from(files_table)
-      .where(eq(files_table.parent, folderId))
+      .where(eq(files_table.parent, folderId));
   },
 
   getFiles: function (folderId: number) {
@@ -46,7 +45,6 @@ export const QUERIES = {
       .from(folders_table)
       .where(eq(folders_table.parent, folderId))
       .orderBy(folders_table.id);
-      
   },
 
   getRootFolderForUser: async function (userId: string) {
@@ -54,21 +52,11 @@ export const QUERIES = {
       .select()
       .from(folders_table)
       .where(
-        and(
-        eq(folders_table.ownerId, userId),
-        isNull(folders_table.parent)
-      ));
+        and(eq(folders_table.ownerId, userId), isNull(folders_table.parent)),
+      );
 
     return rootFolder[0];
-  }
-
-
-
-
-
-
-
-
+  },
 };
 
 export const MUTATIONS = {
@@ -81,10 +69,41 @@ export const MUTATIONS = {
     };
     userId: string;
   }) {
-
     return await db.insert(files_table).values({
       ...input.file,
-      ownerId: input.userId
+      ownerId: input.userId,
     });
+  },
+
+  onboardUser: async function (userId: string) {
+    const rootFolder = await db
+      .insert(folders_table)
+      .values({
+        name: "Root",
+        parent: null,
+        ownerId: userId,
+      })
+      .$returningId();
+
+    const rootFolderId = rootFolder[0]!.id;
+
+    await db.insert(folders_table).values({
+      name: "Images",
+      parent: rootFolderId,
+      ownerId: userId,
+    });
+
+    await db.insert(folders_table).values({
+      name: "Documents",
+      parent: rootFolderId,
+      ownerId: userId,
+    });
+    await db.insert(folders_table).values({
+      name: "To Delete",
+      parent: rootFolderId,
+      ownerId: userId,
+    });
+
+    return rootFolderId;
   },
 };
