@@ -27,15 +27,17 @@ export default function DriveContents(props: {
   return (
     <div className="min-h-screen bg-background p-8 text-foreground">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">store-my-files</h1>
             <ThemeToggle />
           </div>
+          
+          
           <div className="flex items-center space-x-2">
 
             <Button
-              className="bg-transparent text-white hover:outline"
+              className="bg-transparent text-blue-500 shadow-none hover:outline"
               size="sm"
             >Upgrade</Button>
             <Button
@@ -53,11 +55,24 @@ export default function DriveContents(props: {
             </div>
           </div>
         </div>
+        <div className="flex items-start">
+            <UploadButton
+              className="ut-allowed-content:invisible ut-button:text-xs font-sans"
+              appearance={{container: {
+                maxHeight: "55px",
+              }}}
+              input={{
+                folderId: props.currentFolderId
+              }}
+              endpoint="driveUploader"
+              onClientUploadComplete={() =>
+                navigate.refresh()} />
+          </div>
 
         <div className="flex items-center justify-between">
           <div className="flex">
             {props.parents.map((folder) => (
-              <div key={folder.id} className="flex items-center">
+              <div key={folder.id} className="flex items-center text-sm">
                 <Link
                   href={`/f/${folder.id}`}
                 >
@@ -67,21 +82,11 @@ export default function DriveContents(props: {
               </div>
             ))}
           </div>
-          <div className="">
-            <UploadButton
-              className="ut-allowed-content:invisible"
-              input={{
-                folderId: props.currentFolderId
-              }}
-              endpoint="driveUploader"
-              onClientUploadComplete={() =>
-                navigate.refresh()} />
-          </div>
         </div>
 
-        <div className="rounded-lg border bg-card shadow-sm">
+        <div className="rounded-lg border bg-card shadow-sm mt-2 text-sm">
           <div className="border-b px-6 py-4">
-            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-muted-foreground">
+            <div className="grid grid-cols-12 gap-4 text-xs font-medium text-muted-foreground">
               <div className="col-span-6">Name</div>
               <div className="col-span-3">Size</div>
               <div className="col-span-1">Action</div>

@@ -27,7 +27,7 @@ export function FileRow(props: {
   return (
 
 
-    <li key={file.id} className="px-6 py-4 transition-colors hover:bg-muted/50">
+    <li key={file.id} className="px-6 py-4 transition-colors hover:bg-muted/50 text-xs">
       <div className="grid grid-cols-12 items-center gap-4">
         <div className="col-span-6 flex items-center">
           <Link
@@ -44,8 +44,8 @@ export function FileRow(props: {
           {prettyBytes(file.size)}
         </div>
         <div className="col-span-3 text-muted-foreground">
-          <Button className="bg-red-500 text-white" onClick={() => fileDeletion()}>
-            {isLoading ? <Spinner /> : <Trash2Icon className="mr-1" size={20} />}
+          <Button className="bg-transparent text-red-500 shadow-none" onClick={() => fileDeletion()}>
+            {isLoading ? <Spinner /> : <Trash2Icon className="" size={20} />}
             
           </Button>
         </div>
@@ -61,7 +61,7 @@ export function FolderRow(props:
   return (
 
 
-    <li key={folder.id} className="px-6 py-4 transition-colors hover:bg-muted/50">
+    <li key={folder.id} className="px-6 py-4 transition-colors hover:bg-muted/50 text-xs">
       <div className="grid grid-cols-12 items-center gap-4">
         <div className="col-span-6 flex items-center">
 
