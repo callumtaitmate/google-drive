@@ -15,9 +15,11 @@ export function FileRow(props: {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fileDeletion = () => {
+  const fileDeletion = async () => {
+
     setIsLoading(true);
-    deleteFile(file.id)
+
+    await deleteFile(file.id)
 
   }
 
