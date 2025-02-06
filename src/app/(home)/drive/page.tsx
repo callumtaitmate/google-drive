@@ -9,6 +9,7 @@ export default async function DrivePage() {
     if (!session.userId) {
         return redirect("/sign-in");
     }
+
     const rootFolder = await QUERIES.getRootFolderForUser(session.userId);
 
 
@@ -21,7 +22,6 @@ export default async function DrivePage() {
                 if (!session.userId) {
                     return redirect("/sign-in");
                 }
-
 
 
                 const rootFolderId = await MUTATIONS.onboardUser(session.userId);

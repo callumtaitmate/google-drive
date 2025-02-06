@@ -3,15 +3,17 @@
 
 ## TODO
 
-4th Feb
+6th Feb
+
+- [x] Rename Root
+- [x] Fix bread crumbs
+- [x] Remove upload button
+- [ ] test onboarding and functionality
+
+- [ ] fix onboarding/auth redirects
 
 
-- [ ] Home Page + onboarding
-- [ ] Delete files button
-- [ ] analytics
-
-
-## Fun Follow-Ups
+## Follow-Ups
 
 
 # Folder Delete
@@ -25,3 +27,9 @@
 # Access Control
 
 One more check in f -> page. Send them somewhere.
+
+# Toast
+
+Add some UI
+
+# 
