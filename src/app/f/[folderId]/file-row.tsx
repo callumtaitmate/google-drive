@@ -3,18 +3,31 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { deleteFile } from "~/server/actions";
 import type { files_table, folders_table } from "~/server/db/schema";
+import prettyBytes from 'pretty-bytes';
+import { useState } from "react";
+import Spinner from "~/components/ui/spinner";
+
 
 export function FileRow(props: {
   file: typeof files_table.$inferSelect
-})
-{
-    const { file } = props;
-    return (
-    
-    
+}) {
+  const { file } = props;
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const fileDeletion = () => {
+    setIsLoading(true);
+    deleteFile(file.id)
+
+  }
+
+
+  return (
+
+
     <li key={file.id} className="px-6 py-4 transition-colors hover:bg-muted/50">
-    <div className="grid grid-cols-12 items-center gap-4">
-      <div className="col-span-6 flex items-center">
+      <div className="grid grid-cols-12 items-center gap-4">
+        <div className="col-span-6 flex items-center">
           <Link
             href={file.url}
             className="flex items-center hover:text-blue-600 dark:hover:text-blue-400"
@@ -23,33 +36,33 @@ export function FileRow(props: {
             <FileIcon className="mr-3 text-gray-500" size={20} />
             {file.name}
           </Link>
+        </div>
+
+        <div className="col-span-3 text-muted-foreground">
+          {prettyBytes(file.size)}
+        </div>
+        <div className="col-span-3 text-muted-foreground">
+          <Button className="bg-red-500 text-white" onClick={() => fileDeletion()}>
+            {isLoading ? <Spinner /> : <Trash2Icon className="mr-1" size={20} />}
+            
+          </Button>
+        </div>
       </div>
-      
-      <div className="col-span-3 text-muted-foreground">
-        {file.size}
-      </div>
-      <div className="col-span-3 text-muted-foreground">
-        <Button className="bg-red-500 text-white" onClick={() => deleteFile(file.id)}>
-          <Trash2Icon className="mr-1" size={20} />
-        </Button>
-      </div>
-    </div>
-  </li>
-    )
+    </li>
+  )
 }
 
 export function FolderRow(props:
-  {folder: typeof folders_table.$inferSelect;})
-{
-const { folder } = props;
+  { folder: typeof folders_table.$inferSelect; }) {
+  const { folder } = props;
 
-    return (
-    
-    
+  return (
+
+
     <li key={folder.id} className="px-6 py-4 transition-colors hover:bg-muted/50">
-    <div className="grid grid-cols-12 items-center gap-4">
-      <div className="col-span-6 flex items-center">
-        
+      <div className="grid grid-cols-12 items-center gap-4">
+        <div className="col-span-6 flex items-center">
+
           <Link
             href={`/f/${folder.id}`}
             className="flex items-center hover:text-blue-600 dark:hover:text-blue-400"
@@ -57,11 +70,11 @@ const { folder } = props;
             <FolderIcon className="mr-3 text-blue-600 dark:text-blue-400" size={20} />
             {folder.name}
           </Link>
-        
+
+        </div>
+        <div className="col-span-3 text-muted-foreground">
+        </div>
       </div>
-      <div className="col-span-3 text-muted-foreground">
-      </div>
-    </div>
-  </li>
-    )
+    </li>
+  )
 }
