@@ -32,14 +32,14 @@ export default function DriveContents(props: {
             <h1 className="text-2xl font-bold">store-my-files</h1>
             <ThemeToggle />
           </div>
-          
-          
+
+
           <div className="flex items-center space-x-2">
 
-            <Button
+            {/* <Button
               className="bg-transparent text-blue-500 shadow-none hover:outline"
               size="sm"
-            >Upgrade</Button>
+            >Upgrade</Button> */}
             <Button
               className="bg-blue-600 text-white hover:bg-blue-700"
               size="sm"
@@ -56,18 +56,20 @@ export default function DriveContents(props: {
           </div>
         </div>
         <div className="flex items-start">
-            <UploadButton
-              className="ut-allowed-content:invisible ut-button:text-xs font-sans"
-              appearance={{container: {
+          <UploadButton
+            className="ut-allowed-content:invisible ut-button:text-xs font-sans"
+            appearance={{
+              container: {
                 maxHeight: "55px",
-              }}}
-              input={{
-                folderId: props.currentFolderId
-              }}
-              endpoint="driveUploader"
-              onClientUploadComplete={() =>
-                navigate.refresh()} />
-          </div>
+              }
+            }}
+            input={{
+              folderId: props.currentFolderId
+            }}
+            endpoint="driveUploader"
+            onClientUploadComplete={() =>
+              navigate.refresh()} />
+        </div>
 
         <div className="flex items-center justify-between">
           <div className="flex">
