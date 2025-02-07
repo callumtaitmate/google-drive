@@ -8,7 +8,7 @@ export default function StartNow() {
     <form
     action={async() => {
         
-        return redirect("/sign-in");
+        return redirect("/drive");
 
     }}
     >
