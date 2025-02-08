@@ -15,18 +15,25 @@ import { Label } from '~/components/ui/label'
 import { Icons } from '~/components/ui/icons'
 import { cn } from '~/lib/utils'
 import Link from 'next/link'
+import { is } from 'drizzle-orm'
 
 
 export default function SignInPage() {
   return (
+
     <section className='py-24'>
       <div className="grid w-full grow items-center px-4 sm:justify-center">
         <SignIn.Root>
           <Clerk.Loading>
             {(isGlobalLoading) => (
+              
+
+
+
+
               <>
                 <SignIn.Step name="start">
-                  <Card >
+                  <Card>
                     <CardHeader>
                       <CardTitle>Sign in to store-my-files</CardTitle>
                       <CardDescription>Welcome back! Please sign in to continue</CardDescription>
@@ -301,6 +308,7 @@ export default function SignInPage() {
       </div>
 
     </section>
+
   )
 
 
