@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/ui/theme-provider";
 import {
+  ClerkLoaded,
   ClerkLoading,
   ClerkProvider
 } from '@clerk/nextjs'
@@ -37,8 +38,9 @@ export default function RootLayout({
 
                 </div>
               </ClerkLoading>
-              {children}
-
+              <ClerkLoaded>
+                {children}
+              </ClerkLoaded>
             </PostHogProvider>
           </ThemeProvider>
         </body>

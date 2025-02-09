@@ -15,7 +15,6 @@ import { Label } from '~/components/ui/label'
 import { Icons } from '~/components/ui/icons'
 import { cn } from '~/lib/utils'
 import Link from 'next/link'
-import { is } from 'drizzle-orm'
 
 
 export default function SignInPage() {
@@ -26,10 +25,6 @@ export default function SignInPage() {
         <SignIn.Root>
           <Clerk.Loading>
             {(isGlobalLoading) => (
-              
-
-
-
 
               <>
                 <SignIn.Step name="start">
@@ -112,7 +107,7 @@ export default function SignInPage() {
                   <SignIn.Strategy name="password">
                     <Card className="w-full sm:w-96">
                       <CardHeader>
-                        <CardTitle>Enter your password</CardTitle>
+                        <h1 className='text-2xl text-white'>Enter your password</h1>
                         <p className="text-sm text-muted-foreground">
 
                           Welcome back <SignIn.SafeIdentifier /></p>
