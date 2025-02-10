@@ -209,7 +209,7 @@ export default function SignInPage() {
                   </SignIn.Strategy>
                   <div className='flex items-center justify-center'>
 
-                    <p className='text-xs text-gray-400 mt-2'>Reload the sign-in page if you'd registered with Google.
+                    <p className='text-xs text-gray-400 mt-2'>Reload the sign-in page if you have registered with Google.
                     </p>
                   </div>
 
