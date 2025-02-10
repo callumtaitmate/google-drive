@@ -9,6 +9,8 @@ import {
 } from '@clerk/nextjs'
 import { PostHogProvider } from "./_providers/posthog-provider";
 import Spinner from "~/components/ui/spinner";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "store-my-files",
@@ -24,25 +26,27 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={GeistSans.variable} suppressHydrationWarning>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <PostHogProvider>
-              <ClerkLoading>
-                <div className="flex h-screen items-center justify-center">
+          <Suspense fallback={<Loading />}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <PostHogProvider>
+                <ClerkLoading>
+                  <div className="flex h-screen items-center justify-center">
 
-                  <Spinner />
+                    <Spinner />
 
-                </div>
-              </ClerkLoading>
-              <ClerkLoaded>
-                {children}
-              </ClerkLoaded>
-            </PostHogProvider>
-          </ThemeProvider>
+                  </div>
+                </ClerkLoading>
+                <ClerkLoaded>
+                  {children}
+                </ClerkLoaded>
+              </PostHogProvider>
+            </ThemeProvider>
+          </Suspense>
         </body>
       </html>
     </ClerkProvider>

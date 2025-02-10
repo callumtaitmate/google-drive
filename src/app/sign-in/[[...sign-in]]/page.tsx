@@ -19,18 +19,16 @@ import Link from 'next/link'
 
 export default function SignInPage() {
   return (
-
     <section className='py-24'>
       <div className="grid w-full grow items-center px-4 sm:justify-center">
         <SignIn.Root>
           <Clerk.Loading>
             {(isGlobalLoading) => (
-
               <>
                 <SignIn.Step name="start">
-                  <Card>
+                  <Card className="w-full sm:w-96">
                     <CardHeader>
-                      <CardTitle>Sign in to store-my-files</CardTitle>
+                      <CardTitle>Sign in to Acme Co</CardTitle>
                       <CardDescription>Welcome back! Please sign in to continue</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-y-4">
@@ -107,7 +105,7 @@ export default function SignInPage() {
                   <SignIn.Strategy name="password">
                     <Card className="w-full sm:w-96">
                       <CardHeader>
-                        <h1 className='text-2xl text-white'>Enter your password</h1>
+                        <CardTitle>Enter your password</CardTitle>
                         <p className="text-sm text-muted-foreground">
 
                           Welcome back <SignIn.SafeIdentifier /></p>
@@ -209,6 +207,11 @@ export default function SignInPage() {
                     </Card>
 
                   </SignIn.Strategy>
+                  <div className='flex items-center justify-center'>
+
+                    <p className='text-xs text-gray-400 mt-2'>Reload the sign-in page if you'd registered with Google.
+                    </p>
+                  </div>
 
                 </SignIn.Step>
 
@@ -303,7 +306,6 @@ export default function SignInPage() {
       </div>
 
     </section>
-
   )
 
 

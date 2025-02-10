@@ -1,11 +1,13 @@
 import { auth } from "@clerk/nextjs/server";
-import { ArrowBigRight, CheckCircle2Icon, TicketCheckIcon } from "lucide-react";
+import { ArrowBigRight, CheckCircle2Icon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { MUTATIONS, QUERIES } from "~/server/db/queries";
 
 export default async function DrivePage() {
+
+    
     const session = await auth();
 
     if (!session.userId) {
