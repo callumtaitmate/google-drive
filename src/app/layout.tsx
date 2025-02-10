@@ -23,10 +23,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
 
-    <ClerkProvider>
-      <html lang="en" className={GeistSans.variable} suppressHydrationWarning>
-        <body>
-          <Suspense fallback={<Loading />}>
+
+    <html lang="en" className={GeistSans.variable} suppressHydrationWarning>
+      <body>
+        <Suspense fallback={<Loading />}>
+
+          <ClerkProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -44,11 +46,13 @@ export default function RootLayout({
                 <ClerkLoaded>
                   {children}
                 </ClerkLoaded>
+
               </PostHogProvider>
             </ThemeProvider>
-          </Suspense>
-        </body>
-      </html>
-    </ClerkProvider>
+
+          </ClerkProvider>
+        </Suspense>
+      </body>
+    </html>
   );
 }
