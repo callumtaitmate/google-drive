@@ -35,19 +35,17 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <PostHogProvider>
-                <ClerkLoading>
-                  <div className="flex h-screen items-center justify-center">
+              <ClerkLoading>
+                <div className="flex h-screen items-center justify-center">
 
-                    <Spinner />
+                  <Spinner />
 
-                  </div>
-                </ClerkLoading>
-                <ClerkLoaded>
-                  {children}
-                </ClerkLoaded>
+                </div>
+              </ClerkLoading>
+              <ClerkLoaded>
+                {children}
+              </ClerkLoaded>
 
-              </PostHogProvider>
             </ThemeProvider>
 
           </ClerkProvider>
